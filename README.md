@@ -1,24 +1,8 @@
-## Linux Disk Partitioning and Formatting
-
-**Lab Type:** Linux / IT Support Hands-On Lab
-
-**Focus:** Disk Management, Partitioning, File Systems, Mounting
-
-### Tools & Resources
-
-* Linux Virtual Machine (Qwiklabs)
-* Linux Terminal / Shell
-* `lsblk`
-* `df`
-* `fdisk`
-* `mkfs`
-* `mount`
-* Linux `ext4` filesystem
-* Linux Swap partition
+## Disk Partitioning & Formatting in Linux
 
 ---
 
-### Overwiev
+### Overview
 
 In this lab, I practiced **partitioning and formatting a disk drive in Linux**.
 
@@ -39,9 +23,27 @@ These are important skills for an **IT Support Specialist** because disk and fil
 
 ---
 
-## 1. Examine Block Devices
+### Tools & Resources
 
-### Command
+* Linux Virtual Machine (Qwiklabs)
+* Linux Terminal / Shell
+* `lsblk`
+* `df`
+* `fdisk`
+* `mkfs`
+* `mount`
+* Linux `ext4` filesystem
+* Linux Swap partition
+
+### Lab Type 
+Linux / IT Support Hands-On Lab
+
+---
+---
+
+### 1. Examine Block Devices
+
+#### Command
 
 ```bash
 lsblk
@@ -49,7 +51,7 @@ lsblk
 
 ![1](https://i.imgur.com/vTieY1L.png)
 
-### *Purpose*
+#### *Purpose*
 
 `lsblk` displays information about block devices attached to the Linux system.
 
@@ -63,9 +65,9 @@ It shows:
 
 ---
 
-## 2. View Mounted Disks
+### 2. View Mounted Disks
 
-### Command
+#### Command
 
 ```bash
 df -h
@@ -73,7 +75,7 @@ df -h
 
 ![2](https://i.imgur.com/HH4BlFN.png)
 
-### *Purpose*
+#### *Purpose*
 
 The `df` command displays available and used disk space.
 
@@ -81,9 +83,9 @@ The `-h` option means **human-readable**, making sizes easier to understand.
 
 ---
 
-## 3. Examine Disk Partitions
+### 3. Examine Disk Partitions
 
-### List all partitions
+#### List all partitions
 
 ```bash
 sudo fdisk -l
@@ -91,7 +93,7 @@ sudo fdisk -l
 
 ![3](https://i.imgur.com/R8TeL8x.png)
 
-### *Purpose*
+#### *Purpose*
 
 `fdisk -l` displays partition information for the disks connected to the system.
 
@@ -105,7 +107,7 @@ It can show:
 
 ---
 
-### List Partitions on a Specific Disk
+#### List Partitions on a Specific Disk
 
 Replace `[MOUNTED DRIVE]` with the appropriate device.
 
@@ -117,7 +119,7 @@ sudo fdisk -l /dev/[MOUNTED DRIVE]
 
 ---
 
-## 4. Open fdisk in Interactive Mode
+### 4. Open fdisk in Interactive Mode
 
 Before making changes, identify the **unmounted drive**.
 
@@ -129,11 +131,11 @@ sudo fdisk /dev/[UNMOUNTED DRIVE]
 
 ---
 
-## 5. Explore fdisk
+### 5. Explore fdisk
 
 Inside `fdisk`, commands are entered using individual letters.
 
-### Display Help
+#### Display Help
 
 ```text
 m
@@ -145,7 +147,7 @@ The `m` command displays the available `fdisk` commands.
 
 ---
 
-### Display Partition Information
+#### Display Partition Information
 
 ```text
 p
@@ -157,7 +159,7 @@ The `p` command prints the current partition table.
 
 ---
 
-### Exit Without Saving
+#### Exit Without Saving
 
 ```text
 q
@@ -169,7 +171,7 @@ This is useful if I want to cancel my changes.
 
 ---
 
-# 6. Delete Existing Partitions
+### 6. Delete Existing Partitions
 
 The lab disk initially contains multiple partitions.
 
@@ -215,7 +217,7 @@ Deleting partitions can cause data loss, so disk information should always be ba
 
 ---
 
-## 7. Create the First Partition
+### 7. Create the First Partition
 
 After deleting the existing partitions, create a new partition:
 
@@ -249,7 +251,7 @@ The partition is initially created as a Linux filesystem partition.
 
 ---
 
-## 8. Create the Second Partition
+### 8. Create the Second Partition
 
 Create another partition:
 
@@ -281,7 +283,7 @@ The remaining disk space becomes the second partition.
 
 ---
 
-## 9. Change Partition Type
+### 9. Change Partition Type
 
 The first partition needs to be changed to a **Linux swap** partition.
 
@@ -321,7 +323,7 @@ Linux swap
 
 ---
 
-## 10. Verify the Partition Table
+### 10. Verify the Partition Table
 
 Before saving the changes, verify the configuration:
 
@@ -335,7 +337,7 @@ This checks the partition table for errors.
 
 ---
 
-## 11. Save the Changes
+### 11. Save the Changes
 
 To write the new partition table to the disk:
 
@@ -349,7 +351,7 @@ The changes are now committed to the disk.
 
 ---
 
-## 12. Verify the New Partitions
+### 12. Verify the New Partitions
 
 Exit `fdisk` and run:
 
@@ -363,7 +365,7 @@ This should show the newly created partitions.
 
 ---
 
-## 13. Format the Second Partition
+### 13. Format the Second Partition
 
 The second partition will use the **ext4** filesystem.
 
@@ -383,7 +385,7 @@ sudo mkfs -t ext4 /dev/sdb2
 
 ---
 
-## 14. Create a Mount Point
+### 14. Create a Mount Point
 
 Create the directory where the partition will be mounted:
 
@@ -395,7 +397,7 @@ The directory acts as the access point for the new filesystem.
 
 ---
 
-## 15. Mount the Partition
+### 15. Mount the Partition
 
 Mount the second partition:
 
@@ -407,7 +409,7 @@ sudo mount /dev/[UNMOUNTED DRIVE]2 /home/my_drive
 
 ---
 
-## 16. Verify the Filesystem
+### 16. Verify the Filesystem
 
 Run:
 
@@ -417,6 +419,7 @@ lsblk
 
 ![19](https://i.imgur.com/d3wIEpu.png)
 
+---
 ---
 
 ### Commands Learned
@@ -441,6 +444,7 @@ lsblk
 | `mount`          | Mount a filesystem                                     |
 
 ---
+---
 
 ### Cybersecurity Relevance
 
@@ -459,6 +463,7 @@ Understanding filesystems and storage helps with:
 
 For a **SOC Analyst**, understanding Linux storage can be useful when investigating logs, suspicious files, system activity, and compromised systems.
 
+---
 ---
 
 ### Troubleshooting Notes
@@ -508,6 +513,7 @@ Check:
 3. The mount directory exists.
 4. The partition is not already mounted.
 
+---
 ---
 
 ### Key Concepts
@@ -559,6 +565,7 @@ Example:
 Swap is disk space that Linux can use as additional virtual memory.
 
 ---
+---
 
 ### Skills Demonstrated
 
@@ -591,6 +598,7 @@ Swap is disk space that Linux can use as additional virtual memory.
 * Incident-response fundamentals
 * Security investigation fundamentals
 
+---
 ---
 
 ### Final Takeaway
